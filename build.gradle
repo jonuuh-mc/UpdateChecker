@@ -12,19 +12,19 @@
 //}
 //apply plugin: 'net.minecraftforge.gradle.forge'
 
-apply plugin: 'java'
+//apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-version = "1.0.0"
-group = "io.jonuuh.modid"
+//version = "1.0.0"
+//group = "io.jonuuh.modid"
 //archivesBaseName = "modid-1.8.9"
+//
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
+//repositories {
+//    mavenCentral()
+//}
 
 publishing {
     repositories {
@@ -46,7 +46,7 @@ publishing {
 //    makeObfSourceJar = false
 //}
 
-dependencies {}
+//dependencies {}
 
 //processResources {
 //    inputs.property "version", project.version
