@@ -45,7 +45,7 @@ public class UpdateChecker
     {
         UpdateChecker.modID = modID;
 
-        this.latestVersionStr = parseLatestVersionStr("https://raw.githubusercontent.com/jonuuh-mc/UpdateChecker/refs/heads/master/src/main/resources/" + modID + "-version.txt");
+        this.latestVersionStr = parseLatestVersionStr("https://raw.githubusercontent.com/jonuuh-mc/UpdateChecker/refs/heads/master/src/main/resources/versions/" + modID + ".txt");
 
         Version current = new Version(modID, currentVersionStr);
         Version latest = new Version(modID, latestVersionStr);
