@@ -1,36 +1,21 @@
-//buildscript {
-//    repositories {
-////        jcenter()
-//        maven {
-////            name = "forge"
-////            url = "http://files.minecraftforge.net/maven"
-//        }
-//    }
-//    dependencies {
-////        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-//    }
-//}
-//apply plugin: 'net.minecraftforge.gradle.forge'
-
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-version = "1.0.0"
-group = "group"
-archivesBaseName = "test"
+version = "1.0.1"
+group = "io.jonuuh"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-}
+//repositories {
+//    mavenCentral()
+//}
 
 publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/jonuuh-mc/updatechecker"
+            url = "https://maven.pkg.github.com/jonuuh-mc/UpdateChecker"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_PACKAGES_TOKEN")
@@ -43,32 +28,4 @@ publishing {
             from components.java
         }
     }
-//    publications {
-//        gpr(MavenPublication) {
-//            from(components.java)
-//        }
-//    }
 }
-
-//minecraft {
-//    version = "1.8.9-11.15.1.2318-1.8.9"
-//    runDir = "run"
-//    mappings = "stable_20"
-//    makeObfSourceJar = false
-//}
-
-//dependencies {}
-
-//processResources {
-//    inputs.property "version", project.version
-//    inputs.property "mcversion", project.minecraft.version
-//
-//    from(sourceSets.main.resources.srcDirs) {
-//        include 'mcmod.info'
-//        expand 'version': project.version, 'mcversion': project.minecraft.version
-//    }
-//
-//    from(sourceSets.main.resources.srcDirs) {
-//        exclude 'mcmod.info'
-//    }
-//}

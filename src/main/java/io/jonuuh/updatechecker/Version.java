@@ -4,11 +4,11 @@ class Version implements Comparable<Version>
 {
     private int[] parts = new int[3];
 
-    Version(String versionStr)
+    Version(String modID, String versionStr)
     {
         if (!versionStr.matches("^[0-9]+\\.[0-9]+\\.[0-9]+$"))
         {
-            System.out.println("[modID] Input semver string is invalid");
+            System.out.println("[" + modID + "] Semver string '"+ versionStr + "' is invalid");
             parts = new int[]{-1, -1, -1};
             return;
         }

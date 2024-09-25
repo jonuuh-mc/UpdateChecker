@@ -12,9 +12,6 @@ import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class UpdateChecker
@@ -31,7 +28,7 @@ public class UpdateChecker
             throw new IllegalStateException("[" + modID + "] UpdateChecker instance has already been created");
         }
 
-        instance = new UpdateChecker(currentVersionStr);
+        instance = new UpdateChecker(modID, currentVersionStr);
     }
 
     public static UpdateChecker getInstance()
@@ -44,14 +41,14 @@ public class UpdateChecker
         return instance;
     }
 
-    private UpdateChecker(String currentVersionStr)
+    private UpdateChecker(String modID, String currentVersionStr)
     {
-        List<String> urlContentLines = getUrlContentLines("https://raw.githubusercontent.com/jonuuh-mc/UpdateChecker/refs/heads/master/src/main/resources/" + modID + "-version.txt");
+        UpdateChecker.modID = modID;
 
-        this.latestVersionStr = urlContentLines.get(0);
+        this.latestVersionStr = parseLatestVersionStr("https://raw.githubusercontent.com/jonuuh-mc/UpdateChecker/refs/heads/master/src/main/resources/" + modID + "-version.txt");
 
-        Version current = new Version(currentVersionStr);
-        Version latest = new Version(latestVersionStr);
+        Version current = new Version(modID, currentVersionStr);
+        Version latest = new Version(modID, latestVersionStr);
 
         this.isUpdateAvailable = current.compareTo(latest) < 0;
         String sign = isUpdateAvailable ? "<" : ">=";
@@ -68,32 +65,25 @@ public class UpdateChecker
         return isUpdateAvailable;
     }
 
-    private List<String> getUrlContentLines(String url)
+    private String parseLatestVersionStr(String url)
     {
         try
         {
-            List<String> urlContent = new ArrayList<>();
-
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) new URL(url).openConnection();
-            // All of this is only needed because github.io domain certificate is not in cert store by default
-            // (https://stackoverflow.com/a/34533740)
+            // All of this is only needed because github.io domain certificate is not in java cert store by default? (https://stackoverflow.com/a/34533740)
             httpsURLConnection.setSSLSocketFactory(createSSLContext(getGithubIOCertificateString()).getSocketFactory());
 
             Scanner scanner = new Scanner(httpsURLConnection.getInputStream());
+            String version = scanner.hasNextLine() ? scanner.nextLine() : "";
 
-            while (scanner.hasNextLine())
-            {
-                urlContent.add(scanner.nextLine());
-            }
             scanner.close();
-
-            return urlContent;
+            return version;
         }
         catch (GeneralSecurityException | IOException e)
         {
             System.out.println("[" + modID + "] Failed to access or read version file");
             e.printStackTrace();
-            return Collections.singletonList("");
+            return "";
         }
     }
 
