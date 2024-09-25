@@ -8,8 +8,10 @@
 name: Gradle Package
 
 on:
-  release:
-    types: [created]
+  push: # Run whenever new commits are pushed
+    branches: [ master ] # Only if target branch is master
+#  release:
+#    types: [created]
 
 jobs:
   build:
